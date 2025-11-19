@@ -150,24 +150,6 @@ function updateChannelName(userId, newChannelName) {
   throw new Error("User with ID " + userId + " not found");
 }
 
-// Removes a user and also deletes all videos that belong to them.
-function removeUser(userId) {
-  for (var i = 0; i < db.users.length; i++) {
-    if (db.users[i].id === userId) {
-      var remainingVideos = [];
-      for (var j = 0; j < db.videos.length; j++) {
-        if (db.videos[j].userId !== userId) {
-          remainingVideos.push(db.videos[j]);
-        }
-      }
-      db.videos = remainingVideos;
-      db.users.splice(i, 1);
-      return true;
-    }
-  }
-  throw new Error("User with ID " + userId + " does not exist");
-}
-
 // ---------------------------
 // Video Management Functions
 // ---------------------------
@@ -231,37 +213,6 @@ function publishVideo(userId, videoId) {
   return video;
 }
 
-// Deletes a video by ID.
-// Also removes that video from the uploader’s list of uploaded videos.
-function deleteVideoById(videoId) {
-  var videoIndex = -1;
-  for (var i = 0; i < db.videos.length; i++) {
-    if (db.videos[i].id === videoId) {
-      videoIndex = i;
-      break;
-    }
-  }
-  if (videoIndex === -1)
-    throw new Error("Video with ID " + videoId + " not found");
-
-  var video = db.videos[videoIndex];
-  // Remove video ID from uploader's videos array
-  for (var i = 0; i < db.users.length; i++) {
-    if (db.users[i].id === video.userId) {
-      var newVideoList = [];
-      for (var j = 0; j < db.users[i].videos.length; j++) {
-        if (db.users[i].videos[j] !== videoId) {
-          newVideoList.push(db.users[i].videos[j]);
-        }
-      }
-      db.users[i].videos = newVideoList;
-      break;
-    }
-  }
-  // Remove the video object from db.videos
-  db.videos.splice(videoIndex, 1);
-  return true;
-}
 
 // Schedules a video to be “released” (i.e. published) in the future.
 // This only sets a timestamp; the video isn't made publicly active until releaseScheduledVideo is called.
@@ -567,10 +518,8 @@ module.exports = {
   addUser,
   updateUsername,
   updateChannelName,
-  removeUser,
   createDraftVideo,
   publishVideo,
-  deleteVideoById,
   scheduleVideo,
   findUserVideos,
   getChannelStats,

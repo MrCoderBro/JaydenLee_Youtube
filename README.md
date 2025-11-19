@@ -113,19 +113,6 @@ yt.updateChannelName(u.id, 'Bob Builds Stuff');
 
 ---
 
-#### `removeUser(userId)`
-- **Description:** Delete a user and all their videos.  
-- **Parameters:** `userId` (number)  
-- **Returns:** `true` on success
-- **Errors:** `Error("User with ID <id> does not exist")` if not found
-
-**Example:**
-```javascript
-yt.removeUser(u.id);
-```
-
----
-
 ### Video Management Functions
 
 #### `createDraftVideo(userId, title, description, category, isPublic?)`
@@ -163,17 +150,6 @@ yt.publishVideo(alice.id, vid.id);
 ```
 
 ---
-
-#### `deleteVideoById(videoId)`
-- **Description:** Remove a video and its reference from its owner.  
-- **Parameters:** `videoId` (number)  
-- **Returns:** `true` on success
-- **Errors:** `Error("Video with ID <id> not found")` if not found
-
-**Example:**
-```javascript
-yt.deleteVideoById(vid.id);
-```
 
 ---
 

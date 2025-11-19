@@ -50,9 +50,6 @@ yt.scheduleVideo(
 );
 console.log("Bob's scheduled video:", yt.findUserVideos(bob.id));
 
-// Delete a video
-yt.deleteVideoById(video3.id);
-console.log("Alice's videos after deletion:", yt.findUserVideos(alice.id));
 
 // -------------------------
 // Watch History & Recommendations
